@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Manufacture_DE.View.Windows"
         mc:Ignorable="d"
-        Title="Окно авторизации" SizeToContent="WidthAndHeight" >
+        Title="Окно авторизации" WindowStartupLocation="CenterScreen" Icon="\Resources\Images\favicon.png" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />

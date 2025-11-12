@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Manufacture_DE.Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,6 @@ namespace Manufacture_DE
     /// </summary>
     public partial class App : Application
     {
+        public static Entities context = new Entities();
     }
 }
