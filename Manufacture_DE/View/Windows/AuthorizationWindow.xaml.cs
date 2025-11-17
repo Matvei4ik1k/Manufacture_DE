@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Manufacture_DE.Model;
+using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,35 @@ namespace Manufacture_DE.View.Windows
         public AuthorizationWindow()
         {
             InitializeComponent();
+        }
+
+        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(LoginTb.Text)||
+                string.IsNullOrEmpty(PasswordPb.Password))
+            {
+                MessageBox.Show("Заполните все поля!", "Предупреждение", MessageBoxButton.OK,MessageBoxImage.Exclamation);
+            }
+            else
+            {
+                App.CurrentUser = App.context.SystemUser.FirstOrDefault(SystemUser => SystemUser.Login == LoginTb.Text && SystemUser.Login == LoginTb.Text && SystemUser.Password == PasswordPb.Password);
+                if (App.CurrentUser!=null)
+                {
+                    CaptchaWindow captchaWindow = new CaptchaWindow();
+                    if (captchaWindow.ShowDialog()==true)
+                    {
+                        //Аутентификация
+                    }
+                    else
+                    {
+                        //Блокировка
+                    }
+                }
+                else
+                {
+                    //Блокировка
+                }
+            }
         }
     }
 }

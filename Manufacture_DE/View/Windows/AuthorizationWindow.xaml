@@ -25,6 +25,6 @@
         <TextBox Grid.Row="0" Grid.Column="2" Text="" Name="LoginTb"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Пароль:" />
         <PasswordBox Grid.Row="2" Grid.Column="2" Name="PasswordPb"/>
-        <Button Grid.Row="4" Grid.Column="2" Content="Войти" Name="LoginBtn"/>
+        <Button Grid.Row="4" Grid.Column="2" Content="Войти" Name="LoginBtn" Click="LoginBtn_Click"/>
     </Grid>
 </Window>

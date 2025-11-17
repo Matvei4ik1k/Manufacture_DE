@@ -15,5 +15,6 @@ namespace Manufacture_DE
     public partial class App : Application
     {
         public static Entities context = new Entities();
+        public static SystemUser CurrentUser {  get; set; }
     }
 }
