@@ -5,27 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Manufacture_DE.View.Windows"
         mc:Ignorable="d"
-        Title="Captcha" Height="500" Width="500" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        Title="Captcha" SizeToContent="WidthAndHeight" Height="600" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="200"/>
-            
+            <ColumnDefinition Width="430" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
 
-        <UniformGrid Name="CaptchaGrid" Rows="2" Columns="2"/>
-
-        <ListBox Name="CaptchaItemsLb" Grid.Column="2">
+        <ListBox Name="CaptchaLb" SelectionChanged="CaptchaLb_SelectionChanged">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical"/>
+                    <UniformGrid Rows="2" Columns="2"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
-
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <ImageSource= "{Binding}"/>
+                    <Image Source="{Binding ImageSource}" Width="200" Height="200" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <ListBox Name="CaptchaFragmentsLb" Grid.Column="2" SelectionChanged="CaptchaFragmentsLb_SelectionChanged">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding ImageSource}" Width="100" Height="100"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
