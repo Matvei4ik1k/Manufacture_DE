@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище user19Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище user19Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
@@ -72,48 +72,60 @@
             <End Role="SystemUser" EntitySet="SystemUser" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="user19Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customer" EntityType="user19Model.Customer" />
+          <EntitySet Name="SystemUser" EntityType="user19Model.SystemUser" />
+          <EntitySet Name="UserRole" EntityType="user19Model.UserRole" />
+          <AssociationSet Name="FK_SystemUser_Customer" Association="user19Model.FK_SystemUser_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="SystemUser" EntitySet="SystemUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUser_UserRole" Association="user19Model.FK_SystemUser_UserRole">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="SystemUser" EntitySet="SystemUser" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="INN" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Addres" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="INN" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Addres" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
           <Property Name="IsSalesman" Type="Boolean" Nullable="false" />
           <Property Name="IsBuyer" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="SystemUser" Relationship="Self.FK_SystemUser_Customer" FromRole="Customer" ToRole="SystemUser" />
+          <NavigationProperty Name="SystemUser" Relationship="user19Model.FK_SystemUser_Customer" FromRole="Customer" ToRole="SystemUser" />
         </EntityType>
         <EntityType Name="SystemUser">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Login" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="IsBlocked" Type="Boolean" Nullable="false" />
           <Property Name="Customer_id" Type="Int32" Nullable="false" />
           <Property Name="Role_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_SystemUser_Customer" FromRole="SystemUser" ToRole="Customer" />
-          <NavigationProperty Name="UserRole" Relationship="Self.FK_SystemUser_UserRole" FromRole="SystemUser" ToRole="UserRole" />
+          <NavigationProperty Name="Customer" Relationship="user19Model.FK_SystemUser_Customer" FromRole="SystemUser" ToRole="Customer" />
+          <NavigationProperty Name="UserRole" Relationship="user19Model.FK_SystemUser_UserRole" FromRole="SystemUser" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="SystemUser" Relationship="Self.FK_SystemUser_UserRole" FromRole="UserRole" ToRole="SystemUser" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SystemUser" Relationship="user19Model.FK_SystemUser_UserRole" FromRole="UserRole" ToRole="SystemUser" />
         </EntityType>
         <Association Name="FK_SystemUser_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="*" />
+          <End Type="user19Model.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="user19Model.SystemUser" Role="SystemUser" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="Id" />
@@ -124,8 +136,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SystemUser_UserRole">
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="1" />
-          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="*" />
+          <End Type="user19Model.UserRole" Role="UserRole" Multiplicity="1" />
+          <End Type="user19Model.SystemUser" Role="SystemUser" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserRole">
               <PropertyRef Name="Id" />
@@ -135,19 +147,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Customer" EntityType="Self.Customer" />
-          <EntitySet Name="SystemUser" EntityType="Self.SystemUser" />
-          <EntitySet Name="UserRole" EntityType="Self.UserRole" />
-          <AssociationSet Name="FK_SystemUser_Customer" Association="Self.FK_SystemUser_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="SystemUser" EntitySet="SystemUser" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SystemUser_UserRole" Association="Self.FK_SystemUser_UserRole">
-            <End Role="UserRole" EntitySet="UserRole" />
-            <End Role="SystemUser" EntitySet="SystemUser" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -157,33 +156,33 @@
           <EntitySetMapping Name="Customer">
             <EntityTypeMapping TypeName="user19Model.Customer">
               <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="INN" ColumnName="INN" />
-                <ScalarProperty Name="Addres" ColumnName="Addres" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="IsSalesman" ColumnName="IsSalesman" />
                 <ScalarProperty Name="IsBuyer" ColumnName="IsBuyer" />
+                <ScalarProperty Name="IsSalesman" ColumnName="IsSalesman" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Addres" ColumnName="Addres" />
+                <ScalarProperty Name="INN" ColumnName="INN" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SystemUser">
             <EntityTypeMapping TypeName="user19Model.SystemUser">
               <MappingFragment StoreEntitySet="SystemUser">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Login" ColumnName="Login" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="IsBlocked" ColumnName="IsBlocked" />
-                <ScalarProperty Name="Customer_id" ColumnName="Customer_id" />
                 <ScalarProperty Name="Role_id" ColumnName="Role_id" />
+                <ScalarProperty Name="Customer_id" ColumnName="Customer_id" />
+                <ScalarProperty Name="IsBlocked" ColumnName="IsBlocked" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRole">
             <EntityTypeMapping TypeName="user19Model.UserRole">
               <MappingFragment StoreEntitySet="UserRole">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

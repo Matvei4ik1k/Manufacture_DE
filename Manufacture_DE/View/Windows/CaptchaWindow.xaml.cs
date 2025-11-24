@@ -52,11 +52,14 @@ namespace Manufacture_DE.View.Windows
             {
                 if (captcha.IsCorrect(CaptchaLb.Items) == true)
                 {
-                    MessageBox.Show("Ура!");
+                    MessageBox.Show("Вы не робот");
+                    DialogResult = true;
+
                 }
                 else
                 {
-                    MessageBox.Show("Не Ура!");
+                    MessageBox.Show("Вы не прошли");
+                    DialogResult = false;
                 }
             }
         }

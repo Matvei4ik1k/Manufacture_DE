@@ -2,6 +2,7 @@
 using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,31 +29,41 @@ namespace Manufacture_DE.View.Windows
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(LoginTb.Text)||
+            if (string.IsNullOrEmpty(LoginTb.Text) ||
                 string.IsNullOrEmpty(PasswordPb.Password))
             {
-                MessageBox.Show("Заполните все поля!", "Предупреждение", MessageBoxButton.OK,MessageBoxImage.Exclamation);
+                MessageBox.Show("Заполните все поля!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
             else
             {
                 App.CurrentUser = App.context.SystemUser.FirstOrDefault(SystemUser => SystemUser.Login == LoginTb.Text && SystemUser.Login == LoginTb.Text && SystemUser.Password == PasswordPb.Password);
-                if (App.CurrentUser!=null)
+                if (App.CurrentUser != null)
                 {
                     CaptchaWindow captchaWindow = new CaptchaWindow();
-                    if (captchaWindow.ShowDialog()==true)
+                    if (captchaWindow.ShowDialog() == true)
                     {
-                        //Аутентификация
+                        if (App.CurrentUser.Role_id == 1)
+                        {
+                            AdministratorWindow administrator = new AdministratorWindow();
+                            administrator.Show();
+
+                        }
                     }
                     else
                     {
-                        //Блокировка
+                        UserWindow userWindow = new UserWindow();
+                        userWindow.Show();
                     }
+
+                    Close();
                 }
                 else
                 {
                     //Блокировка
                 }
+
             }
+            
         }
     }
 }
