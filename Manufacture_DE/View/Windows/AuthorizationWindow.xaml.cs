@@ -38,6 +38,7 @@ namespace Manufacture_DE.View.Windows
             else
             {
                 App.CurrentUser = App.context.SystemUser.FirstOrDefault(SystemUser => SystemUser.Login == LoginTb.Text && SystemUser.Login == LoginTb.Text && SystemUser.Password == PasswordPb.Password);
+
                 if (App.CurrentUser != null)
                 {
                     CaptchaWindow captchaWindow = new CaptchaWindow();
@@ -55,9 +56,17 @@ namespace Manufacture_DE.View.Windows
                         }
                         Close();
                     }
-                    
-                    
+                    else
+                    {
+                        //
+                    }
                 }
+                else
+                {
+                    MessageBox.Show($"Учётная запись заблокирована!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        
                 else
                 {
                     string login = App.context.SystemUser.FirstOrDefault(systemUser => systemUser.Login == LoginTb.Text).Login;
@@ -81,7 +90,7 @@ namespace Manufacture_DE.View.Windows
                         }
                     }
                 }
-            }
+            
         }
     }
 }
