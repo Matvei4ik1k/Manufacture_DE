@@ -54,7 +54,6 @@ namespace Manufacture_DE.View.Windows
                 {
                     MessageBox.Show("Вы не робот");
                     DialogResult = true;
-
                 }
                 else
                 {

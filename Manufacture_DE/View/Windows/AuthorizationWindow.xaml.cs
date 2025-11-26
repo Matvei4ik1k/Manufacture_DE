@@ -22,6 +22,7 @@ namespace Manufacture_DE.View.Windows
     /// </summary>
     public partial class AuthorizationWindow : Window
     {
+        int failedEntryCount = 0;
         public AuthorizationWindow()
         {
             InitializeComponent();
@@ -46,24 +47,41 @@ namespace Manufacture_DE.View.Windows
                         {
                             AdministratorWindow administrator = new AdministratorWindow();
                             administrator.Show();
-
                         }
+                        else
+                        {
+                            UserWindow userWindow = new UserWindow();
+                            userWindow.Show();
+                        }
+                        Close();
                     }
-                    else
-                    {
-                        UserWindow userWindow = new UserWindow();
-                        userWindow.Show();
-                    }
-
-                    Close();
+                    
+                    
                 }
                 else
                 {
-                    //Блокировка
-                }
+                    string login = App.context.SystemUser.FirstOrDefault(systemUser => systemUser.Login == LoginTb.Text).Login;
 
+                    if (string.IsNullOrEmpty(login))
+                    {
+                        MessageBox.Show($"Введен неправильный логин и пароль.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        failedEntryCount++;
+                        MessageBox.Show($"Введен неправильный пароль. Осталось попыток:{failedEntryCount} из 3", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                        if (failedEntryCount == 3)
+                        {
+                            MessageBox.Show("Пользователь заблокирован!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                            failedEntryCount = 0;
+                            SystemUser userToBlock = App.context.SystemUser.FirstOrDefault(systemUser => systemUser.Login == LoginTb.Text);
+                            userToBlock.IsBlocked = true;
+                            App.context.SaveChanges();
+                        }
+                    }
+                }
             }
-            
         }
     }
 }
